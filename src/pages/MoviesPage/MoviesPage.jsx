@@ -1,6 +1,9 @@
 import MovieList from "../../components/MovieList/MovieList"
 
+
 export default function MoviesPage({ movies, onChange, onSubmit }){
+    
+    
     return(
         <>
         <form onSubmit={onSubmit}>

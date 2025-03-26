@@ -3,10 +3,17 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import css from './MovieDetailsPage.module.css';
 import { Link, Outlet } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function MovieDetailsPage() {
     const { movieId } = useParams();
     const [movie, setMovie] = useState({});
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const goBack = () => {
+        navigate(location.state?.from || "/movies");
+    };
 
     useEffect(() => {
         async function fetchMovieDetails() {
@@ -23,6 +30,7 @@ export default function MovieDetailsPage() {
 
     return (
         <div className={css.container}>
+            <button onClick={goBack}>Go back</button>
             {movie.backdrop_path ? (
                 <img 
                     className={css.backdrop} 

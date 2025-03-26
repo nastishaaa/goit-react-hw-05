@@ -15,11 +15,17 @@ import MovieReviews from './components/MovieReviews/MovieReviews ';
 function App() {
 
   const [movies, setMovies] = useState([]);
+  const [moviesPage, setMoviesPage] = useState([]);
   const [value, setValue] = useState('');
 
   const API_KEY = '65e63a43c258a7dd70aa0c13e1b1fe41';
   const url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`;
-  
+  const options = {
+    headers: {
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NWU2M2E0M2MyNThhN2RkNzBhYTBjMTNlMWIxZmU0MSIsIm5iZiI6MTc0MjkwMDIzMS43OTAwMDAyLCJzdWIiOiI2N2UyOGMwNzE2YTNjNWMyMjRmMDVlNDEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.Gj5KKh_5hoQkblhe7TtEiniX_OhNq0TGx1HwRS_dyOs'
+    }
+};
+
   const SearchMovie = async (value) => {
 
     if (!value || value.trim() === '') {
@@ -29,7 +35,7 @@ function App() {
     return;
     }
     const data = await findMoviesAPI(value);
-    setMovies(data);
+    setMoviesPage(data);
   }
 
   const hendleSubmit = (ev) => {
@@ -40,11 +46,12 @@ function App() {
   useEffect(() => {
     async function fetchMovies() {
       try{
-        const resp = await axios.get(url);
+        const resp = await axios.get(url, options);
         setMovies(resp.data.results);
         
-      } catch(error){
-        console.log(error);
+      } catch{
+        toast('Something went wrong. Try again!', 
+          {position: 'top-right'});
       } 
     }
     fetchMovies();
@@ -66,7 +73,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage movies={movies} />} />
-        <Route path="/movies" element={<MoviesPage movies={movies} 
+        <Route path="/movies" element={<MoviesPage movies={moviesPage} 
         onChange={(ev) => setValue(ev.target.value)} 
         onSubmit={hendleSubmit}/>} />
         <Route path="/movies/:movieId" element={<MovieDetailsPage />} >
