@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import axios from 'axios';
 import css from './MovieDetailsPage.module.css';
 import { Link, Outlet } from "react-router-dom";
@@ -30,7 +30,8 @@ export default function MovieDetailsPage() {
 
     return (
         <div className={css.container}>
-            <button onClick={goBack}>Go back</button>
+
+            <button className={css.btnBack} onClick={goBack}>Go back</button>
             {movie.backdrop_path ? (
                 <img 
                     className={css.backdrop} 
@@ -55,11 +56,14 @@ export default function MovieDetailsPage() {
             )}
 
             <ul className={css.navDetails}>
+            
                 <li className={css.castSlide}><Link to="cast">Cast</Link></li>
                 <li className={css.castSlide}><Link to="reviews">Reviews</Link></li>
             </ul>
             
-            <Outlet />
+            <Suspense fallback={<h2>Loading...</h2>}>
+                <Outlet />
+            </Suspense>
             
         </div>
     );

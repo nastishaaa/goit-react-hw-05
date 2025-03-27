@@ -20,7 +20,12 @@ export default function MovieCast() {
                 };
                 
                 const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY}`, options);
-                setCast(response.data.cast);
+                
+                if (response.data && response.data.cast && response.data.cast.length > 0) {
+                    setCast(response.data.cast);
+                } else {
+                    toast('No results', { position: 'top-right' });
+                    setCast([]); }
                 
             } catch {
                 toast('Something went wrong. Try again!', 
@@ -28,9 +33,12 @@ export default function MovieCast() {
             }
         }
         fetchMovieCast();
+
+        
     }, [movieId])
 
     return(
+    <>
         <ul className={css.list}>
             {cast.map(({name, character, id }) => (
                 <li key={id}>
@@ -38,5 +46,7 @@ export default function MovieCast() {
                 </li>
             ))}
         </ul>
+    </>
+        
     )
 }

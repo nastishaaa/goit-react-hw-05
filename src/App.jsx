@@ -1,30 +1,23 @@
 import { useState, useEffect } from 'react';
+import { lazy, Suspense } from "react";
 import './App.css';
 import { Route, Routes, NavLink } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
 import axios from 'axios';
 import findMoviesAPI from './api';
 
-import HomePage from './pages/HomePage/HomePage';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-import MoviesPage from './pages/MoviesPage/MoviesPage';
-import MovieDetailsPage from './pages/MovieDetails/MovieDetailsPage';
-import MovieCast from './components/MovieCast/MovieCast';
-import MovieReviews from './components/MovieReviews/MovieReviews ';
+const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
+const MoviesPage = lazy(() => import('./pages/MoviesPage/MoviesPage'));
+const MovieDetailsPage = lazy(() => import('./pages/MovieDetails/MovieDetailsPage'));
+const MovieCast = lazy(() => import('./components/MovieCast/MovieCast'));
+const MovieReviews = lazy(() => import('./components/MovieReviews/MovieReviews '));
 
 function App() {
 
   const [movies, setMovies] = useState([]);
   const [moviesPage, setMoviesPage] = useState([]);
   const [value, setValue] = useState('');
-
-  const API_KEY = '65e63a43c258a7dd70aa0c13e1b1fe41';
-  const url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`;
-  const options = {
-    headers: {
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NWU2M2E0M2MyNThhN2RkNzBhYTBjMTNlMWIxZmU0MSIsIm5iZiI6MTc0MjkwMDIzMS43OTAwMDAyLCJzdWIiOiI2N2UyOGMwNzE2YTNjNWMyMjRmMDVlNDEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.Gj5KKh_5hoQkblhe7TtEiniX_OhNq0TGx1HwRS_dyOs'
-    }
-};
 
   const SearchMovie = async (value) => {
 
@@ -35,6 +28,10 @@ function App() {
     return;
     }
     const data = await findMoviesAPI(value);
+    if(data.length === 0){
+      toast("No findings", 
+        {position: "top-right", });
+    }
     setMoviesPage(data);
   }
 
@@ -45,11 +42,20 @@ function App() {
   
   useEffect(() => {
     async function fetchMovies() {
+      const API_KEY = '65e63a43c258a7dd70aa0c13e1b1fe41';
+      const url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`;
+      const options = {
+        headers: {
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NWU2M2E0M2MyNThhN2RkNzBhYTBjMTNlMWIxZmU0MSIsIm5iZiI6MTc0MjkwMDIzMS43OTAwMDAyLCJzdWIiOiI2N2UyOGMwNzE2YTNjNWMyMjRmMDVlNDEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.Gj5KKh_5hoQkblhe7TtEiniX_OhNq0TGx1HwRS_dyOs'
+        }
+};
+
       try{
+        
         const resp = await axios.get(url, options);
         setMovies(resp.data.results);
         
-      } catch{
+      } catch {
         toast('Something went wrong. Try again!', 
           {position: 'top-right'});
       } 
@@ -61,6 +67,8 @@ function App() {
   return (
     <>    
     <Toaster position="top-right" reverseOrder={false} />
+    <Suspense fallback={<div>Loading...</div>}></Suspense>
+    <div className="container">
     <nav>
         <NavLink to="/" >
           Home
@@ -70,6 +78,8 @@ function App() {
         </NavLink>
         
     </nav>
+    </div>
+    
 
       <Routes>
         <Route path="/" element={<HomePage movies={movies} />} />
