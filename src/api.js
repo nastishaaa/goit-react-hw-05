@@ -12,6 +12,7 @@ export default async function findMoviesAPI(value) {
     };
     try {
         const data = await axios.get(url, options);
+        console.log(data.data.results);
         return data.data.results;
     } catch  {
         return alert('Thomething went wrong. Try again!')

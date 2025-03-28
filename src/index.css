@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #fafafa;
+  background-color: #1C1C1E;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,5 +18,9 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
+}
+
+li{
+  background-color: #333333;
 }
 
