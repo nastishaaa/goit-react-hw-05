@@ -35,7 +35,7 @@ function App() {
     setMoviesPage(data);
   }
 
-  const hendleSubmit = (ev) => {
+  const handleSubmit = (ev) => {
     ev.preventDefault(); 
     SearchMovie(value);
   }
@@ -67,31 +67,32 @@ function App() {
   return (
     <>    
     <Toaster position="top-right" reverseOrder={false} />
-    <Suspense fallback={<div>Loading...</div>}></Suspense>
     <div className="container">
-    <nav>
-        <NavLink to="/" >
-          Home
-        </NavLink>
-        <NavLink to="/movies" >
-          Movies
-        </NavLink>
-        
-    </nav>
+    <Suspense fallback={<div>Loading...</div>}>
+      <nav>
+          <NavLink to="/" >
+            Home
+          </NavLink>
+          <NavLink to="/movies" >
+            Movies
+          </NavLink>
+      </nav>
+    </Suspense>
     </div>
     
-
-      <Routes>
-        <Route path="/" element={<HomePage movies={movies} />} />
-        <Route path="/movies" element={<MoviesPage movies={moviesPage} 
-        onChange={(ev) => setValue(ev.target.value)} 
-        onSubmit={hendleSubmit}/>} />
-        <Route path="/movies/:movieId" element={<MovieDetailsPage />} >
-          <Route path="cast" element={<MovieCast />} />
-          <Route path="reviews" element={<MovieReviews />} />
-        </Route>
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<HomePage movies={movies} />} />
+          <Route path="/movies" element={<MoviesPage movies={moviesPage} 
+          onChange={(ev) => setValue(ev.target.value)} 
+          onSubmit={handleSubmit}/>} />
+          <Route path="/movies/:movieId" element={<MovieDetailsPage />} >
+            <Route path="cast" element={<MovieCast />} />
+            <Route path="reviews" element={<MovieReviews />} />
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
     </>
   )
 }

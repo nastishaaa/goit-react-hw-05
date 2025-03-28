@@ -22,7 +22,6 @@ export default function MovieDetailsPage() {
                 const API_KEY = '65e63a43c258a7dd70aa0c13e1b1fe41';
                 const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`);
                 setMovie(response.data);
-                
             } catch {
                 toast('Something went wrong', 
                     {position: 'top-right'});
@@ -38,7 +37,7 @@ export default function MovieDetailsPage() {
             {movie.backdrop_path ? (
                 <img 
                     className={css.backdrop} 
-                    src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path}`} 
+                    src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`} 
                     alt={movie.title} 
                 />
             ) : (
