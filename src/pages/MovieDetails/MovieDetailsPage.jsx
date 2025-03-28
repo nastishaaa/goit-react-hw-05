@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect, Suspense } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 import css from './MovieDetailsPage.module.css';
 import { Link, Outlet } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -22,8 +23,9 @@ export default function MovieDetailsPage() {
                 const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`);
                 setMovie(response.data);
                 
-            } catch (err) {
-                console.log(err);
+            } catch {
+                toast('Something went wrong', 
+                    {position: 'top-right'});
             }
         }
         fetchMovieDetails();
