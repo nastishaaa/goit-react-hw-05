@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
+import { Suspense } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import css from './MovieDetailsPage.module.css';
@@ -34,6 +35,7 @@ export default function MovieDetailsPage() {
         <div className={css.container}>
 
             <button className={css.btnBack} onClick={goBack}>Go back</button>
+            <div className={css.content}>
             {movie.backdrop_path ? (
                 <img 
                     className={css.backdrop} 
@@ -62,17 +64,21 @@ export default function MovieDetailsPage() {
             )}
 
             </div>
+            </div>
             
-            <ul className={css.navDetails}>
-            
-                <li className={css.castSlide}><Link to="cast">Cast</Link></li>
-                <li className={css.castSlide}><Link to="reviews">Reviews</Link></li>
-            </ul>
-            
-            <Suspense fallback={<h2>Loading...</h2>}>
-                <Outlet />
-            </Suspense>
-            
+            <div className={css.listContainer}> 
+                <ul className={css.navDetails}>
+                    <li className={css.castSlide}><Link to="cast">Cast</Link></li>
+                    <li className={css.castSlide}><Link to="reviews">Reviews</Link></li>
+                </ul>
+            </div>
+            <div className={css.listContainer}>
+    <Suspense fallback={<div>Loading...</div>}>
+        <div className={css.outletContainer}>
+            <Outlet />
+        </div>
+    </Suspense>
+</div>
         </div>
     );
 }

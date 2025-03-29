@@ -4,16 +4,20 @@
     margin: 0 auto;
     padding: 20px;
 }
-
 .backdrop {
-    width: 100%;
+    width: 40%; 
+    max-width: 400px; 
     height: auto;
-    max-height: 500px; 
     object-fit: cover;
     border-radius: 12px;
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
-    margin-bottom: 20px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.content{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
 
 .backdrop:hover {
@@ -38,16 +42,6 @@
     text-transform: uppercase;
 }
 
-/* 
-.backdrop {
-    width: 100%;
-    height: auto;
-    max-height: 500px;
-    object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
-} */
 
 .navDetails {
     display: flex;
@@ -146,7 +140,7 @@
 .movieContainer {
     background: #1c1c1c;
     color: #fff;
-    min-width: 1100px;
+    min-width: 600px;
     padding: 20px;
     border-radius: 12px;
     max-width: 600px;
@@ -177,4 +171,8 @@
     padding: 15px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
+} 
+
+.listContainer{
+    color: aliceblue;
 }
