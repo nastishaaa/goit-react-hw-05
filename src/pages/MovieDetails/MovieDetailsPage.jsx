@@ -14,7 +14,7 @@ export default function MovieDetailsPage() {
     const navigate = useNavigate();
 
     const goBack = () => {
-        navigate(location.state?.from || "/movies");
+        navigate(location.state?.from.pathname || "/movies");
     };
 
     useEffect(() => {
@@ -72,13 +72,7 @@ export default function MovieDetailsPage() {
                     <li className={css.castSlide}><Link to="reviews">Reviews</Link></li>
                 </ul>
             </div>
-            <div className={css.listContainer}>
-    <Suspense fallback={<div>Loading...</div>}>
-        <div className={css.outletContainer}>
             <Outlet />
-        </div>
-    </Suspense>
-</div>
         </div>
     );
 }

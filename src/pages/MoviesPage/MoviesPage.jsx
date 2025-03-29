@@ -1,5 +1,6 @@
 import MovieList from "../../components/MovieList/MovieList"
-import css from './MoviesPage.module.css'
+import css from './MoviesPage.module.css';
+
 
 export default function MoviesPage({ movies, onChange, onSubmit }){
     
