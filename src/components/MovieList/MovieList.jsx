@@ -1,5 +1,5 @@
 import css from './MovieList.module.css';
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
 
 const MovieItem = lazy(() => import('../MovieItem/MovieItem'));
 

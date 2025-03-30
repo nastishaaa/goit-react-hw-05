@@ -6,15 +6,17 @@ import toast from 'react-hot-toast';
 import css from './MovieDetailsPage.module.css';
 import { Link, Outlet } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useRef } from 'react';
 
 export default function MovieDetailsPage() {
     const { movieId } = useParams();
     const [movie, setMovie] = useState({});
     const location = useLocation();
     const navigate = useNavigate();
+    const prevLocation = useRef(location.state?.from || "/movies");
 
     const goBack = () => {
-        navigate(location.state?.from.pathname || "/movies");
+        navigate(prevLocation.current);
     };
 
     useEffect(() => {
@@ -72,7 +74,10 @@ export default function MovieDetailsPage() {
                     <li className={css.castSlide}><Link to="reviews">Reviews</Link></li>
                 </ul>
             </div>
-            <Outlet />
+            <Suspense fallback={<h2>Loading...</h2>}>
+                <Outlet />
+            </Suspense>
+            
         </div>
     );
 }
