@@ -12,7 +12,6 @@ export default function MoviesPage({ }){
     const [value, setValue] = useState(query);
     const [moviesPage, setMoviesPage] = useState([]);
     const location = useLocation();
-    const prevLocation = useRef(location.state);
 
     const handleSubmit = (ev) => {
         ev.preventDefault(); 
@@ -44,16 +43,16 @@ export default function MoviesPage({ }){
 
     return(
         <div className={css.container}>
-        <form className={css.form} onSubmit={handleSubmit}>
-        <input className={css.input}  
-            type="text" 
-            placeholder="Movie name"
-            autoFocus
-            onChange={(ev) => setValue(ev.target.value)}/>
-            <button className={css.button} type="submit">Search</button>
-        </form>
-            <MovieList movies={moviesPage}/>
-            
+            <form className={css.form} onSubmit={handleSubmit}>
+            <input className={css.input}  
+                type="text" 
+                placeholder="Movie name"
+                autoFocus
+                onChange={(ev) => setValue(ev.target.value)}/>
+                <button className={css.button} type="submit">Search</button>
+            </form>
+                <MovieList movies={moviesPage}/>
+                
         </div>
     )
 }
